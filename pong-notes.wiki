@@ -9,7 +9,7 @@ It has all of the same properties with Breakout, but with an AI aspect.
 1. X - Create the base HTML
 2. X - Create a ball
 3. X - Create basic movement for the ball
-4. Implement collision detection for the walls
+4. X - Implement collision detection for the walls
 5. Create a paddle for the user
 6. Create movement for the paddle
 7. Implement collision detection for the user paddle

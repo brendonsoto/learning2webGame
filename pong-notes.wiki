@@ -1,0 +1,23 @@
+= Pong =
+
+Just created the repo.
+
+Why Pong? Because it seems like the next logical step from Breakout.
+It has all of the same properties with Breakout, but with an AI aspect.
+
+== Gameplan ==
+1. Create the base HTML
+2. Create a ball
+3. Create basic movement for the ball
+4. Implement collision detection for the walls
+5. Create a paddle for the user
+6. Create movement for the paddle
+7. Implement collision detection for the user paddle
+8. Implement collision detection for the user wall to create the lose case
+9. Create a paddle for the AI
+10. Implement collision detection for the AI paddle
+11. Implement collision detection for the AI wall to create a lose case
+12. Implement AI
+13. Add a score component
+14. Display the score
+15. Create a start screen

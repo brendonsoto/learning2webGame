@@ -6,8 +6,8 @@ Why Pong? Because it seems like the next logical step from Breakout.
 It has all of the same properties with Breakout, but with an AI aspect.
 
 == Gameplan ==
-1. Create the base HTML
-2. Create a ball
+1. X - Create the base HTML
+2. X - Create a ball
 3. Create basic movement for the ball
 4. Implement collision detection for the walls
 5. Create a paddle for the user

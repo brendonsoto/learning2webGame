@@ -7,7 +7,7 @@ const ballStartX = canvas.width / 2
 const ballStartY = canvas.height / 2
 let ballX = ballStartX
 let ballY = ballStartY
-let horizontalSpeed = 2
+let horizontalSpeed = -2
 let verticalSpeed = 2
 
 // Paddle stuff
@@ -51,7 +51,12 @@ const drawPaddle = (x, y) => {
 // Collision detections
 // Validate Horizontal/Vertical Direction - checks if direction needs to be reversed
 const validateHorizontalDirection = (x, dx) => {
-    if (x < leftBoundary || x > rightBoundary) { return -dx; }
+    const isBallInPlayerPaddle =
+        ballX === paddleWidth &&
+        ballY >= playerY &&
+        ballY <= playerY + paddleHeight;
+    // if (x < leftBoundary || x > rightBoundary) { return -dx; }
+    if (isBallInPlayerPaddle) { return -dx; }
     return dx;
 }
 const validateVerticalDirection = (y, dy) => {

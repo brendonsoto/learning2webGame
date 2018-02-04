@@ -12,7 +12,7 @@ It has all of the same properties with Breakout, but with an AI aspect.
 4. X - Implement collision detection for the walls
 5. X - Create a paddle for the user
 6. X - Create movement for the paddle
-7. Implement collision detection for the user paddle
+7. X - Implement collision detection for the user paddle
 8. Implement collision detection for the user wall to create the lose case
 9. Create a paddle for the AI
 10. Implement collision detection for the AI paddle

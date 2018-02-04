@@ -5,10 +5,12 @@ const ctx = canvas.getContext('2d')
 const ballRadius = 10
 const ballStartX = canvas.width / 2
 const ballStartY = canvas.height / 2
+const defaultHorizontalSpeed = -2
+const defaultVerticalSpeed = 2
 let ballX = ballStartX
 let ballY = ballStartY
-let horizontalSpeed = -2
-let verticalSpeed = 2
+let horizontalSpeed = defaultHorizontalSpeed
+let verticalSpeed = defaultVerticalSpeed
 
 // Paddle stuff
 const paddleHeight = 40
@@ -25,10 +27,15 @@ let isDownArrowPressed = false
 
 // General stuff
 const defaultColor = '#0095DD'
+
+// NOTE Are these necessary?
 const upperBoundary = canvas.height - ballRadius
 const lowerBoundary = ballRadius
 const leftBoundary = ballRadius
 const rightBoundary = canvas.width - ballRadius
+
+let playerScore = 0
+let aiScore = 0
 
 
 // Drawing functions
@@ -40,6 +47,13 @@ const drawBall = (x, y) => {
     ctx.closePath()
 }
 
+const resetBall = () => {
+    horizontalSpeed = defaultHorizontalSpeed
+    verticalSpeed = defaultVerticalSpeed
+    ballX = ballStartX
+    ballY = ballStartY
+}
+
 const drawPaddle = (x, y) => {
     ctx.beginPath()
     ctx.rect(x, y, paddleWidth, paddleHeight)
@@ -48,16 +62,25 @@ const drawPaddle = (x, y) => {
     ctx.closePath()
 }
 
+const resetPaddle = () => {
+    playerX = playerStartX
+    playerY = playerStartY
+}
+
 // Collision detections
 // Validate Horizontal/Vertical Direction - checks if direction needs to be reversed
-const validateHorizontalDirection = (x, dx) => {
+const detectHorizontalCollisions = () => {
     const isBallInPlayerPaddle =
         ballX === paddleWidth &&
         ballY >= playerY &&
-        ballY <= playerY + paddleHeight;
+        ballY <= playerY + paddleHeight
     // if (x < leftBoundary || x > rightBoundary) { return -dx; }
-    if (isBallInPlayerPaddle) { return -dx; }
-    return dx;
+    if (isBallInPlayerPaddle) { horizontalSpeed = -horizontalSpeed }
+    if (ballX === paddleWidth && !isBallInPlayerPaddle) {
+        aiScore++
+        resetBall()
+        resetPaddle()
+    }
 }
 const validateVerticalDirection = (y, dy) => {
     if (y < lowerBoundary || y > upperBoundary) { return -dy; }
@@ -70,7 +93,7 @@ const draw = () => {
     drawBall(ballX, ballY)
     drawPaddle(playerX, playerY)
 
-    horizontalSpeed = validateHorizontalDirection(ballX, horizontalSpeed)
+    detectHorizontalCollisions()
     verticalSpeed = validateVerticalDirection(ballY, verticalSpeed)
 
     ballX += horizontalSpeed

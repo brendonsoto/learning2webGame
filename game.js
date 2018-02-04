@@ -16,10 +16,13 @@ let verticalSpeed = defaultVerticalSpeed
 const paddleHeight = 40
 const paddleWidth = 10
 const playerStartX = 0
-const playerStartY = canvas.height / 2 - paddleHeight / 2
+const aiStartX = canvas.width - paddleWidth
+const paddleStartY = canvas.height / 2 - paddleHeight / 2
 let paddleSpeed = 2
 let playerX = playerStartX
-let playerY = playerStartY
+let playerY = paddleStartY
+let aiX = aiStartX
+let aiY = paddleStartY
 
 // Event stuff
 let isUpArrowPressed = false
@@ -64,7 +67,7 @@ const drawPaddle = (x, y) => {
 
 const resetPaddle = () => {
     playerX = playerStartX
-    playerY = playerStartY
+    playerY = paddleStartY
 }
 
 // Collision detections
@@ -92,6 +95,7 @@ const draw = () => {
 
     drawBall(ballX, ballY)
     drawPaddle(playerX, playerY)
+    drawPaddle(aiX, aiY)
 
     detectHorizontalCollisions()
     verticalSpeed = validateVerticalDirection(ballY, verticalSpeed)

@@ -15,8 +15,13 @@ const paddleHeight = 40
 const paddleWidth = 10
 const playerStartX = 0
 const playerStartY = canvas.height / 2 - paddleHeight / 2
+let paddleSpeed = 2
 let playerX = playerStartX
 let playerY = playerStartY
+
+// Event stuff
+let isUpArrowPressed = false
+let isDownArrowPressed = false
 
 // General stuff
 const defaultColor = '#0095DD'
@@ -66,9 +71,25 @@ const draw = () => {
     ballX += horizontalSpeed
     ballY += verticalSpeed
 
+    if (isUpArrowPressed && playerY > 0) { playerY -= paddleSpeed }
+    if (isDownArrowPressed && playerY < canvas.height - paddleHeight) { playerY += paddleSpeed }
+
     window.requestAnimationFrame(draw)
 }
 
+
+// Event listeners
+const keydownHandler = (e) => {
+    isUpArrowPressed = e.keyCode === 38
+    isDownArrowPressed = e.keyCode === 40
+}
+const keyupHandler = (e) => {
+    isUpArrowPressed = e.keyCode === 38 ? false : null
+    isDownArrowPressed = e.keyCode === 40 ? false : null
+}
+
+document.addEventListener('keydown', keydownHandler)
+document.addEventListener('keyup', keyupHandler)
 
 // Main
 draw()

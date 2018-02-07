@@ -6,7 +6,7 @@ const ballRadius = 10
 const ballStartX = canvas.width / 2
 const ballStartY = canvas.height / 2
 const defaultHorizontalSpeed = -4
-const defaultVerticalSpeed = 0
+const defaultVerticalSpeed = -2
 let ballX = ballStartX
 let ballY = ballStartY
 let horizontalSpeed = defaultHorizontalSpeed
@@ -79,14 +79,25 @@ const detectHorizontalCollisions = () => {
     const isBallInAiPaddle =
         ballX >= aiX && ballX <= canvas.width &&
         ballY >= aiY && ballY <= aiY + paddleHeight
-    // if (x < leftBoundary || x > rightBoundary) { return -dx; }
+
+    // If the ball is hitting either paddle, reverse its direction
     if (isBallInPlayerPaddle || isBallInAiPaddle) { horizontalSpeed = -horizontalSpeed }
+
+    // If the ball is on the player's side, but not hitting the paddle, then give a point to the AI and reset
     if (ballX <= paddleWidth && !isBallInPlayerPaddle) {
         aiScore++
         resetBall()
         resetPaddle()
     }
+
+    // Otherwise, if the above is true for the AI, give the player a point and reset
+    if (ballX >= canvas.width - paddleWidth && !isBallInAiPaddle) {
+        playerScore++
+        resetBall()
+        resetPaddle()
+    }
 }
+
 const validateVerticalDirection = (y, dy) => {
     if (y < lowerBoundary || y > upperBoundary) { return -dy; }
     return dy;

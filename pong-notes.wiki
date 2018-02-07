@@ -17,7 +17,11 @@ It has all of the same properties with Breakout, but with an AI aspect.
 9. X - Create a paddle for the AI
 10. X - Implement collision detection for the AI paddle
 11. X - Implement collision detection for the AI wall to create a lose case
-12. Implement AI
-13. Add a score component
-14. Display the score
-15. Create a start screen
+12. X - Implement AI
+13. X - Add a score component
+14. X - Display the score
+15. Add sensitivity areas to the paddles
+16. Create a start screen
+
+
+For the AI, the original Pong game seems to have the normal mode AI simply move up if the ball is above its paddle and down if its below. Simple following maneuver.

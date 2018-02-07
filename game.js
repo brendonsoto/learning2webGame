@@ -5,7 +5,7 @@ const ctx = canvas.getContext('2d')
 const ballRadius = 10
 const ballStartX = canvas.width / 2
 const ballStartY = canvas.height / 2
-const defaultHorizontalSpeed = -4
+const defaultHorizontalSpeed = -2
 const defaultVerticalSpeed = -2
 let ballX = ballStartX
 let ballY = ballStartY
@@ -70,6 +70,22 @@ const resetPaddle = () => {
     playerY = paddleStartY
 }
 
+const drawScore = () => {
+    ctx.font = '24px Impact'
+    ctx.fillStyle = '#000'
+    ctx.fillText(playerScore, canvas.width * .25, paddleHeight)
+    ctx.fillText(aiScore, canvas.width * .75, paddleHeight)
+}
+
+const drawNet = () => {
+    ctx.beginPath()
+    ctx.setLineDash([5, 15])
+    ctx.moveTo(canvas.width / 2, 0)
+    ctx.lineTo(canvas.width / 2, canvas.height)
+    ctx.strokeStyle = defaultColor
+    ctx.stroke()
+}
+
 // Collision detections
 // Validate Horizontal/Vertical Direction - checks if direction needs to be reversed
 const detectHorizontalCollisions = () => {
@@ -103,9 +119,17 @@ const validateVerticalDirection = (y, dy) => {
     return dy;
 }
 
+// Basic AI - just moves up if the ball is above it or down if ball is below
+const moveAI = () => {
+    if (ballY >= aiY) { aiY += paddleSpeed }
+    else if (ballY <= aiY) { aiY -= paddleSpeed }
+}
+
 const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+    drawNet()
+    drawScore()
     drawBall(ballX, ballY)
     drawPaddle(playerX, playerY)
     drawPaddle(aiX, aiY)
@@ -115,6 +139,7 @@ const draw = () => {
 
     ballX += horizontalSpeed
     ballY += verticalSpeed
+    moveAI()
 
     if (isUpArrowPressed && playerY > 0) { playerY -= paddleSpeed }
     if (isDownArrowPressed && playerY < canvas.height - paddleHeight) { playerY += paddleSpeed }

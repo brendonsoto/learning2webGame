@@ -18,7 +18,8 @@ const paddleWidth = 10
 const playerStartX = 0
 const aiStartX = canvas.width - paddleWidth
 const paddleStartY = canvas.height / 2 - paddleHeight / 2
-let paddleSpeed = 2
+const paddleDivision = 4 // Used to section out parts of the paddle to effect the ball's speed
+let paddleSpeed = 3
 let playerX = playerStartX
 let playerY = paddleStartY
 let aiX = aiStartX
@@ -87,7 +88,31 @@ const drawNet = () => {
 }
 
 // Collision detections
+const determineSpinFromPaddle = (paddleY) => {
+
+    // If the ball is within 4 pixels of the middle of the paddle, just let the ball go straight
+    if (ballY >= paddleY + paddleHeight / 2 + 2 && ballY <= paddleY + paddleHeight / 2 - 2) {
+        verticalSpeed = 0
+    }
+
+    // If the ball is in the middle of the paddle, just give a little boost
+    else if (ballY >= paddleY + paddleDivision * 2 && ballY <= paddleY + paddleDivision * 3) {
+        verticalSpeed = verticalSpeed
+    }
+
+    // If the ball is in between the edge of the paddle and the middle, give it a bigger boost
+    else if (ballY >= paddleY + paddleDivision && ballY <= paddleY + paddleHeight - paddleDivision) {
+        verticalSpeed = verticalSpeed > 0 ? 3 : -3
+    }
+
+    // If it's on the edge, give it a big boost
+    else {
+        verticalSpeed = verticalSpeed > 0 ? 4 : -4
+    }
+}
+
 // Validate Horizontal/Vertical Direction - checks if direction needs to be reversed
+
 const detectHorizontalCollisions = () => {
     const isBallInPlayerPaddle =
         ballX <= paddleWidth &&
@@ -97,7 +122,12 @@ const detectHorizontalCollisions = () => {
         ballY >= aiY && ballY <= aiY + paddleHeight
 
     // If the ball is hitting either paddle, reverse its direction
-    if (isBallInPlayerPaddle || isBallInAiPaddle) { horizontalSpeed = -horizontalSpeed }
+    if (isBallInPlayerPaddle || isBallInAiPaddle) { horizontalSpeed *= -1 }
+
+    if (isBallInPlayerPaddle) { determineSpinFromPaddle(playerY) }
+    if (isBallInAiPaddle) { determineSpinFromPaddle(aiY) }
+
+
 
     // If the ball is on the player's side, but not hitting the paddle, then give a point to the AI and reset
     if (ballX <= paddleWidth && !isBallInPlayerPaddle) {

@@ -21,7 +21,7 @@ It has all of the same properties with Breakout, but with an AI aspect.
 13. X - Add a score component
 14. X - Display the score
 15. X - Add sensitivity areas to the paddles
-16. Add a score to win the game
+16. X - Add a score to win the game
 17. Make a pause button
 18. Create a start screen
 

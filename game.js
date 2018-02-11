@@ -1,5 +1,6 @@
 const canvas = document.getElementById('gameCanvas')
 const ctx = canvas.getContext('2d')
+let requestId;
 
 // Ball stuff
 const ballRadius = 10
@@ -31,13 +32,7 @@ let isDownArrowPressed = false
 
 // General stuff
 const defaultColor = '#0095DD'
-
-// NOTE Are these necessary?
-const upperBoundary = canvas.height - ballRadius
-const lowerBoundary = ballRadius
-const leftBoundary = ballRadius
-const rightBoundary = canvas.width - ballRadius
-
+const winningScore = 2
 let playerScore = 0
 let aiScore = 0
 
@@ -85,6 +80,19 @@ const drawNet = () => {
     ctx.lineTo(canvas.width / 2, canvas.height)
     ctx.strokeStyle = defaultColor
     ctx.stroke()
+}
+
+const drawWinningMessage = () => {
+    ctx.font = '36 Impact'
+    ctx.fillStyle = '#000'
+
+    if (playerScore === winningScore) {
+        ctx.fillText('You won!', canvas.width * .25, canvas.height * .5)
+    } else {
+        ctx.fillText('You lost :(', canvas.width * .75, canvas.height * .5)
+    }
+
+    window.cancelAnimationFrame(requestId)
 }
 
 // Collision detections
@@ -145,7 +153,7 @@ const detectHorizontalCollisions = () => {
 }
 
 const validateVerticalDirection = (y, dy) => {
-    if (y < lowerBoundary || y > upperBoundary) { return -dy; }
+    if (y < ballRadius || y > canvas.height - ballRadius) { return -dy; }
     return dy;
 }
 
@@ -164,6 +172,11 @@ const draw = () => {
     drawPaddle(playerX, playerY)
     drawPaddle(aiX, aiY)
 
+    if (playerScore === winningScore || aiScore === winningScore) {
+        drawWinningMessage()
+        return
+    }
+
     detectHorizontalCollisions()
     verticalSpeed = validateVerticalDirection(ballY, verticalSpeed)
 
@@ -174,7 +187,7 @@ const draw = () => {
     if (isUpArrowPressed && playerY > 0) { playerY -= paddleSpeed }
     if (isDownArrowPressed && playerY < canvas.height - paddleHeight) { playerY += paddleSpeed }
 
-    window.requestAnimationFrame(draw)
+    requestId = window.requestAnimationFrame(draw)
 }
 
 
@@ -192,4 +205,4 @@ document.addEventListener('keydown', keydownHandler)
 document.addEventListener('keyup', keyupHandler)
 
 // Main
-draw()
+requestId = window.requestAnimationFrame(draw)

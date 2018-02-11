@@ -32,7 +32,7 @@ let isDownArrowPressed = false
 
 // General stuff
 const defaultColor = '#0095DD'
-const winningScore = 2
+const winningScore = 11
 let playerScore = 0
 let aiScore = 0
 
@@ -47,7 +47,6 @@ const drawBall = (x, y) => {
 }
 
 const resetBall = () => {
-    horizontalSpeed = defaultHorizontalSpeed
     verticalSpeed = defaultVerticalSpeed
     ballX = ballStartX
     ballY = ballStartY
@@ -140,6 +139,7 @@ const detectHorizontalCollisions = () => {
     // If the ball is on the player's side, but not hitting the paddle, then give a point to the AI and reset
     if (ballX <= paddleWidth && !isBallInPlayerPaddle) {
         aiScore++
+        horizontalSpeed = defaultHorizontalSpeed
         resetBall()
         resetPaddle()
     }
@@ -147,6 +147,7 @@ const detectHorizontalCollisions = () => {
     // Otherwise, if the above is true for the AI, give the player a point and reset
     if (ballX >= canvas.width - paddleWidth && !isBallInAiPaddle) {
         playerScore++
+        horizontalSpeed = defaultHorizontalSpeed * -1
         resetBall()
         resetPaddle()
     }

@@ -35,6 +35,7 @@ const defaultColor = '#0095DD'
 const winningScore = 11
 let playerScore = 0
 let aiScore = 0
+let isPaused = false;
 
 
 // Drawing functions
@@ -92,6 +93,12 @@ const drawWinningMessage = () => {
     }
 
     window.cancelAnimationFrame(requestId)
+}
+
+const drawPauseMessage = () => {
+    ctx.font = '32 Impact'
+    ctx.fillStyle = '#000'
+    ctx.fillText('Paused', canvas.width * .4, canvas.height * .4)
 }
 
 // Collision detections
@@ -178,6 +185,12 @@ const draw = () => {
         return
     }
 
+    if (isPaused) {
+        drawPauseMessage()
+        window.cancelAnimationFrame(requestId)
+        return
+    }
+
     detectHorizontalCollisions()
     verticalSpeed = validateVerticalDirection(ballY, verticalSpeed)
 
@@ -196,6 +209,16 @@ const draw = () => {
 const keydownHandler = (e) => {
     isUpArrowPressed = e.keyCode === 38
     isDownArrowPressed = e.keyCode === 40
+
+    if (e.keyCode === 80) {
+        if (isPaused) {
+            // resume game
+            isPaused = false
+            requestId = window.requestAnimationFrame(draw)
+        } else {
+            isPaused = true
+        }
+    }
 }
 const keyupHandler = (e) => {
     isUpArrowPressed = e.keyCode === 38 ? false : null

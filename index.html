@@ -12,15 +12,39 @@ body {
   width: 100%;
 }
 
+#game-container {
+  margin: 50px auto;
+  position: relative;
+  width: 480px;
+}
+
 canvas {
   background: white;
   display: block;
-  margin: 50px auto;
+}
+
+#controls {
+  color: white;
+  display: block;
+  margin: 15px auto;
+  list-style: none;
+  width: 50%;
+}
+
+#controls li {
+  margin-bottom: 10px;
 }
   </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="480" height="320"></canvas>
+  <div id="game-container">
+    <canvas id="gameCanvas" width="480" height="320"></canvas>
+    <ul id="controls">
+      <li>Up Key = Move up</li>
+      <li>Down Key = Move down</li>
+      <li>P = Pause</li>
+    </ul>
+  </div>
   <script src="./game.js"></script>
 </body>
 </html>

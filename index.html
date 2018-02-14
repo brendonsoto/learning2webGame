@@ -12,10 +12,21 @@ body {
   width: 100%;
 }
 
+.hidden {
+  display: none;
+}
+
 #game-container {
   margin: 50px auto;
   position: relative;
   width: 480px;
+}
+
+#menu {
+  position: absolute;
+  left: 0; top: 50%; right: 0; bottom: 0; 
+  text-align: center;
+  transform: translateY(-50%)
 }
 
 canvas {
@@ -38,7 +49,13 @@ canvas {
 </head>
 <body>
   <div id="game-container">
+    <div id="menu">
+      <h1>Definitely Not Pong</h1>
+      <p><strong>Press Enter to Start!</strong></p>
+    </div>
+
     <canvas id="gameCanvas" width="480" height="320"></canvas>
+
     <ul id="controls">
       <li>Up Key = Move up</li>
       <li>Down Key = Move down</li>

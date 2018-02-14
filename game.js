@@ -1,6 +1,7 @@
+const menu = document.getElementById('menu')
 const canvas = document.getElementById('gameCanvas')
 const ctx = canvas.getContext('2d')
-let requestId;
+let requestId
 
 // Ball stuff
 const ballRadius = 10
@@ -35,7 +36,8 @@ const defaultColor = '#0095DD'
 const winningScore = 11
 let playerScore = 0
 let aiScore = 0
-let isPaused = false;
+let isPaused = false
+let hasGameStarted = false
 
 
 // Drawing functions
@@ -161,8 +163,8 @@ const detectHorizontalCollisions = () => {
 }
 
 const validateVerticalDirection = (y, dy) => {
-    if (y < ballRadius || y > canvas.height - ballRadius) { return -dy; }
-    return dy;
+    if (y < ballRadius || y > canvas.height - ballRadius) { return -dy }
+    return dy
 }
 
 // Basic AI - just moves up if the ball is above it or down if ball is below
@@ -207,6 +209,12 @@ const draw = () => {
 
 // Event listeners
 const keydownHandler = (e) => {
+    if (e.keyCode === 13 && !hasGameStarted) {
+        requestId = window.requestAnimationFrame(draw)
+        hasGameStarted = true
+        menu.classList.add('hidden')
+    } 
+
     isUpArrowPressed = e.keyCode === 38
     isDownArrowPressed = e.keyCode === 40
 
@@ -229,4 +237,4 @@ document.addEventListener('keydown', keydownHandler)
 document.addEventListener('keyup', keyupHandler)
 
 // Main
-requestId = window.requestAnimationFrame(draw)
+// requestId = window.requestAnimationFrame(draw)

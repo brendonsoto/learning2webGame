@@ -24,7 +24,16 @@ It has all of the same properties with Breakout, but with an AI aspect.
 16. X - Add a score to win the game
 17. X - Make the ball appear on the loser's side
 18. X - Make a pause button
-19. Create a start screen
+19. X - Create a start screen
 
 
 For the AI, the original Pong game seems to have the normal mode AI simply move up if the ball is above its paddle and down if its below. Simple following maneuver.
+
+=== Reflections ===
+Collision detection is tricky at high speeds. AI is also tricky to create. But it's all been insightful as to what's involved in making a game.
+
+For collision detection, the concept itself is simple enough, but there seems to be opportunities for edge cases when calculating collisions. Plus it's a challenge handling collisions while also making the animations seem smooth when objects collide. The animations in here are simple too!
+
+For AI, there are so many paths to take for programming behavior. You could just set the AI to follow the ball in a 1:1 like ratio, but then the player could never beat the AI. The AI implementation here is a simple delayed movement; move up if the ball is above or down if below. It's easy to see how a more advanced AI would require a lot more complexity.
+
+Overall this was fun! It was my first exposure to creating AI and a game on my own (this was after doing the MDN breakout tutorial). I feel like I've grown a bit more as a developer and have definitely more of an appreciation for the work that goes into games.
